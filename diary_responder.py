@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 import time
-from datetime import datetime
+from PIL import Image
 
 class DiaryResponder:
     """Class to handle interactions with Google Gemini API."""
@@ -25,7 +25,7 @@ class DiaryResponder:
                 "temperature": 0.85,
                 "top_p": 0.95,
                 "top_k": 40,
-                "max_output_tokens": 1024,  # Reduced for flash model
+                "max_output_tokens": 1024,
             }
             
             self.safety_settings = [
@@ -102,10 +102,10 @@ class DiaryResponder:
             return self.reset_conversation()
         return True
 
-    def get_response(self, user_input, lang="zh"):
+    def get_response(self, user_input, images=None, input_lang="中文", output_lang="中文"):
         """Generate response based on user input and conversation history"""
         if not user_input.strip():
-            return "有什麼想聊的嗎？(◕‿◕)" if lang == "zh" else "What would you like to chat about? (◕‿◕)"
+            return "有什麼想聊的嗎？(◕‿◕)" if output_lang == "中文" else "What would you like to chat about? (◕‿◕)"
             
         try:
             # Ensure conversation health
@@ -114,7 +114,7 @@ class DiaryResponder:
             
             # Add context if it's a new conversation
             if not self.conversation.history:
-                context = self.get_context(lang)
+                context = self.get_context(output_lang)
                 try:
                     self._make_request_with_rate_limit(
                         lambda: self.conversation.send_message(f"Context: {context}")
@@ -127,30 +127,31 @@ class DiaryResponder:
                         lambda: self.conversation.send_message(f"Context: {context}")
                     )
             
-            # Prepare the prompt with instructions for concise responses and limited emoji use
-            base_prompt = """
+            # Prepare the prompt with language instructions
+            base_prompt = f"""
             回應要求：
             1. 簡潔有重點
             2. 整個對話中最多使用3個表情符號
             3. 根據問題類型給予適當回應
             4. 保持自然的對話語氣
-            """ if lang == "zh" else """
-            Response requirements:
-            1. Keep it concise and focused
-            2. Use maximum 3 emoticons in the entire conversation
-            3. Adjust response based on question type
-            4. Maintain natural conversation flow
+            5. 用戶使用{input_lang}輸入，請用{output_lang}回覆
+            
+            用戶輸入：{user_input}
             """
             
-            prompt = f"{user_input}\n\n{base_prompt}"
-            if lang == "zh":
-                prompt += "\n請用繁體中文回覆"
+            # Process images if provided
+            if images:
+                image_parts = []
+                for img in images:
+                    image_parts.append(img)
+                prompt_parts = [base_prompt] + image_parts
+                response = self._make_request_with_rate_limit(
+                    lambda: self.model.generate_content(prompt_parts)
+                )
             else:
-                prompt += "\nPlease respond in English"
-                
-            response = self._make_request_with_rate_limit(
-                lambda: self.conversation.send_message(prompt)
-            )
+                response = self._make_request_with_rate_limit(
+                    lambda: self.conversation.send_message(base_prompt)
+                )
             
             if response and response.text and len(response.text.strip()) > 0:
                 return response.text
@@ -159,11 +160,11 @@ class DiaryResponder:
                 
         except Exception as e:
             print(f"Error in get_response: {e}")
-            return "需要休息一下，等等再聊吧 (´･_･`)" if lang == "zh" else "Need a little break, let's chat later (´･_･`)"
+            return "需要休息一下，等等再聊吧 (´･_･`)" if output_lang == "中文" else "Need a little break, let's chat later (´･_･`)"
 
-    def get_context(self, lang="zh"):
+    def get_context(self, lang="中文"):
         """Get the appropriate context based on language"""
-        if lang == "zh":
+        if lang == "中文":
             return """你是一個溫柔貼心又博學的AI助手。你的特點：
 1. 像朋友一樣溫暖體貼
 2. 在一次對話中最多使用3個表情符號

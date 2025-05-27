@@ -22,7 +22,15 @@
    - 選擇 "Download ZIP"
    - 解壓縮下載的檔案到你想要的位置
 
-3. **啟動應用程式**
+3. **設定 API 金鑰**
+   - 在專案根目錄建立 `.env` 文件
+   - 在檔案中添加你的 Google API 金鑰：
+     ```
+     GOOGLE_API_KEY=your_api_key_here
+     ```
+   - 將 `your_api_key_here` 替換為你的實際 API 金鑰
+
+4. **啟動應用程式**
    - 雙擊 `start_diary.bat`
    - 首次啟動時會自動設置 Python 環境並安裝必要套件
    - 等待安裝完成後，應用程式會自動在瀏覽器中開啟
@@ -80,6 +88,12 @@ cd ai-diary-assistant
 2. Install dependencies:
 ```bash
 pip install -r requirements.txt
+```
+
+3. Set up your environment variables:
+Create a `.env` file in the project root and add:
+```
+GOOGLE_API_KEY=your_api_key_here
 ```
 
 ### Running the Desktop App
