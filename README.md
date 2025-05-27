@@ -23,25 +23,6 @@ chmod +x start_diary.sh  # Make script executable
 ./start_diary.sh
 ```
 
-### 🔑 API Key Setup (API 金鑰設置)
-
-#### 取得 API 金鑰 / Get API Key
-1. 前往 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 登入 Google 帳號
-3. 點擊 "Create API key" 按鈕
-4. 複製生成的 API 金鑰
-
-#### 設置 API 金鑰 / Setup API Key
-1. 在專案資料夾中建立 `.env` 檔案
-2. 將以下內容加入 `.env` 檔案（替換為您的 API 金鑰）:
-```
-GOOGLE_API_KEY=your_api_key_here
-```
-
-注意：
-- API 金鑰請保密，不要分享給他人
-- 首次使用時需要設定 API 金鑰
-- 設定完成後程式會自動記住，不需要重複設定
 
 ## Features
 
