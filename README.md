@@ -1,28 +1,65 @@
 # AI Diary Assistant
 
-A cross-platform AI-powered diary assistant that helps you reflect on your thoughts and experiences.
+一個智能日記助手，幫助你記錄生活，分析情緒，提供建議。
 
-## 🚀 Quick Start (一鍵安裝)
+## 安裝說明
 
-### Windows 使用者
-1. 下載並安裝 [Python 3.8+](https://www.python.org/downloads/) (安裝時請勾選 "Add Python to PATH")
-2. 下載此專案:
-```bash
-git clone https://github.com/yourusername/ai-diary-assistant.git
-cd ai-diary-assistant
-```
-3. 雙擊執行 `start_diary.bat`
+### 系統需求
+- Windows 7/10/11
+- Python 3.8 或更新版本
+- 網路連接
+- Google API 金鑰（用於 AI 功能）
 
-### Mac/Linux Users
-1. Install Python 3.8+ if not installed
-2. Run these commands:
-```bash
-git clone https://github.com/yourusername/ai-diary-assistant.git
-cd ai-diary-assistant
-chmod +x start_diary.sh  # Make script executable
-./start_diary.sh
-```
+### 安裝步驟
 
+1. **安裝 Python**
+   - 從 [Python 官網](https://www.python.org/downloads/) 下載並安裝 Python 3.8 或更新版本
+   - 安裝時請務必勾選 "Add Python to PATH" 選項
+   - 安裝完成後，可以在命令提示字元中輸入 `python --version` 確認安裝成功
+
+2. **下載專案**
+   - 點擊 GitHub 頁面上的 "Code" 按鈕
+   - 選擇 "Download ZIP"
+   - 解壓縮下載的檔案到你想要的位置
+
+3. **設定 API 金鑰**
+   - 在專案根目錄建立 `.env` 文件
+   - 在檔案中添加你的 Google API 金鑰：
+     ```
+     GOOGLE_API_KEY=your_api_key_here
+     ```
+   - 將 `your_api_key_here` 替換為你的實際 API 金鑰
+
+4. **啟動應用程式**
+   - 雙擊 `start_diary.bat`
+   - 首次啟動時會自動設置 Python 環境並安裝必要套件
+   - 等待安裝完成後，應用程式會自動在瀏覽器中開啟
+
+### 常見問題
+
+1. **找不到 Python**
+   - 確認 Python 已正確安裝
+   - 確認安裝時有勾選 "Add Python to PATH"
+   - 重新啟動電腦後再試一次
+
+2. **無法安裝套件**
+   - 確認網路連接正常
+   - 嘗試使用系統管理員權限執行
+   - 檢查防火牆設定
+
+3. **應用程式無法啟動**
+   - 確認 `.env` 檔案存在且包含正確的 API 金鑰
+   - 檢查錯誤訊息
+   - 確認所有必要套件都已正確安裝
+
+### 聯絡支援
+
+如果遇到任何問題，請：
+1. 檢查上述常見問題解答
+2. 在 GitHub Issues 頁面回報問題
+3. 提供詳細的錯誤訊息和系統資訊
+
+## 使用說明
 
 ## Features
 
